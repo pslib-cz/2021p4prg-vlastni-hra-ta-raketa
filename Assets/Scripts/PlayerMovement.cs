@@ -29,6 +29,5 @@ public class PlayerMovement : Entity
     // Update is called once per frame
     void Update()
     {
-        
     }
 }
