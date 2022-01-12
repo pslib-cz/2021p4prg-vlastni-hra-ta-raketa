@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float Speed = 5;
-    public float Damage = 5;
-    public Entity OwnedBy;
-
-
-    // Start is called before the first frame update
+    public Vector2 velocity;
+    public float speed;
+    public float rotation;
+    private float countDiff = 5;
+    private float currentTime;
     void Start()
     {
-        
+        currentTime = Time.time;
+        transform.rotation = Quaternion.Euler(0, 0, rotation);
     }
-
-    // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        transform.Translate(Vector2.up * Time.deltaTime * Speed);
+        transform.Translate(velocity * speed * Time.deltaTime);
+
+        if (currentTime + countDiff < Time.time)
+        {
+            Destroy(gameObject);
+            currentTime = Time.time;
+        }
     }
 }

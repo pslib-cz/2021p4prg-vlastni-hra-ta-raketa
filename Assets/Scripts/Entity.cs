@@ -4,36 +4,29 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public float HP = 5;
-    public bool IsDead = false;
-
-
-    public void Damage(float Damage)
-    {
-        HP -= Damage;
-        if (HP <= 0)
-        {
-            if (!IsDead)
-            {
-                IsDead = true;
-                Die();
-            }
-        }
-    }
-    public virtual void Die()
-    {
-        Destroy(gameObject);
-    }
-
-    // Start is called before the first frame update
+    public int startHp;
+    int hp;
+    public float bulletCooldown;
+    float bulletTimer;
     void Start()
     {
-        
+        hp = startHp;
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        bulletTimer -= Time.deltaTime;
+        if (hp == 0)
+        {
+            //SceneManager.LoadScene(2);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Bullet" && bulletTimer <= 0)
+        {
+            hp -= 1;
+            //print(hp);
+            bulletTimer = bulletCooldown;
+        }
     }
 }
